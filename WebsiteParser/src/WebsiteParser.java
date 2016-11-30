@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -25,11 +24,11 @@ public class WebsiteParser
             }
 
             // Now we are done parsing, so link everything
-            Course.checkAllLinks();
-
-            System.out.println("All courses linked");
-
-            output();
+            if (Course.validate())
+            {
+                output();
+            }
+            
         } catch (IOException e)
         {
             System.out.println("Problem connecting to website.");
@@ -53,20 +52,20 @@ public class WebsiteParser
             Elements prereqLinks = course.select(".courseblockdesc").select("a");
             for (Element e : prereqLinks)
             {
-                c.addPrereqKey(e.attr("title"));
+                c.addPrereqKey(e.attr("title").replace(" ", " "));
             }
         }
     }
 
     /**
      * Generate csv file based on course info
-     * 
-     * @throws FileNotFoundException
+     * @throws IOException 
      */
-    public static void output() throws FileNotFoundException
+    public static void output() throws IOException
     {
-        File f = new File("courses.csv");
+        File f = new File("../courses.csv");
         PrintWriter out = new PrintWriter(f);
+        System.out.println("Writing to " + f.getCanonicalPath());
         for (Course c : Course.courses.values())
         {
             out.write(c + "\n");
