@@ -13,8 +13,6 @@ public class Util
         s = s.replace("&nbsp;", " ").replace("&amp;", "&");
         // Remove every <br>
         s = s.replace("<br>", "");
-        // Escape every comma for CSV output
-        s = s.replace(",", "\\,");
 
         // Remove every link
         Pattern anchorTag = Pattern.compile("<a[^>]*>([\\w ]*)<\\/a>");

@@ -17,44 +17,12 @@ public class Course
     {
         System.out.println("Validating...");
         
-        int k = 0;
-        int t = 0;
-        int d = 0;
-        int p = 0;
-
-        // Check for non delimited commas
-        Pattern looseCommas = Pattern.compile("[^\\\\],"); 
         for (Course c : courses.values())
         {
             // Check that all links exist
             c.checkLinks();
-            
-            if (looseCommas.matcher(c.key).find())
-            {
-                k++;
-            }
-            if (looseCommas.matcher(c.title).find())
-            {
-                t++;
-            }
-            if (looseCommas.matcher(c.desc).find())
-            {
-                d++;
-            }
-            if (looseCommas.matcher(c.getPrereqs("\\,")).find())
-            {
-                p++;
-            }
         }
-        if (k > 0 || t > 0 || d > 0 || p > 0)
-        {
-            System.err.println("The following items were found with non-delimited commas");
-            System.err.println("Keys: " + k);
-            System.err.println("Titles: " + t);
-            System.err.println("Descriptions: " + d);
-            System.err.println("Prereqs: " + p);
-            return false;
-        }
+        
         return true;
     }
 
@@ -135,7 +103,7 @@ public class Course
 
     public String toString()
     {
-        String buffer = String.format("%s,%s,%s,", key, title, desc);
+        String buffer = String.format("%s,\"%s\",\"%s\",", key, title, desc);
         return buffer + getPrereqs(",");
     }
 }
