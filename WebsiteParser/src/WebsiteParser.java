@@ -80,7 +80,7 @@ public class WebsiteParser
         {
             for (int i = 0; i < majors.size(); i++)
             {
-                if ((c.getKey() + c.getPrereqs("")).contains(majors.get(i)))
+                if (c.getKey().contains(majors.get(i)))
                 {
                     writers[i].write(c + "\n");
                 }
