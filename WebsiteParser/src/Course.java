@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class Course
 {
@@ -91,19 +90,14 @@ public class Course
         String buffer = "";
         for (String prereq : prereqs)
         {
-            buffer += prereq + delimiter;
+            buffer += delimiter + prereq;
         }
-        return buffer.substring(0, buffer.length() - (buffer.length() > 0 ? delimiter.length() : 0));
-    }
-
-    public String prettyString()
-    {
-        return String.format("%s: %s\n%s\n%s", key, title, desc, getPrereqs(", "));
+        return buffer;
     }
 
     public String toString()
     {
-        String buffer = String.format("%s,\"%s\",\"%s\",", key, title, desc);
+        String buffer = String.format("%s,\"%s\",\"%s\"", key, title, desc);
         return buffer + getPrereqs(",");
     }
 }
